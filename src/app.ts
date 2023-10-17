@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express'
+import todoRoutes from './routes/todo.route'
 
 const app = express();
+app.use(express.json());
 
-app.get('/health',(req:Request,res:Response)=>{
-  res.send('Health check OK')
-})
+app.use('/api/todos',todoRoutes)
 
 export default app;
