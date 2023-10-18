@@ -62,7 +62,7 @@ export async function updateItem(
   if (!isValidMongoID(itemId))
     throw new NotFoundError('Item Not Found', 'getItem');
   const { name, quantity, purchased } = req.body;
-  if (!name && !quantity && !purchased)
+  if (!name && !quantity && purchased === undefined)
     throw new BadRequestError('Not updating anything', 'updateItem');
   const item = await Item.findOneAndUpdate(
     { _id: itemId },
