@@ -23,7 +23,7 @@ export const updateItemSchema = z.object({
     itemId: z.string({ required_error: 'Item id is required' }),
   }),
 });
-export const getItemSchema = z.object({
+const getItemSchema = z.object({
   params: z.object({
     itemId: z.string({ required_error: 'Item Id is required' }),
   }),

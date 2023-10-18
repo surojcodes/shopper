@@ -75,4 +75,15 @@ export async function updateItem(
   });
 }
 
-export function deleteItem() {}
+export async function deleteItem(
+  req: Request<updateItemInput['params']>,
+  res: Response
+) {
+  const itemId = req.params.itemId;
+  const item = await checkAndGetItem({ _id: itemId });
+  item.deleteOne();
+  res.status(200).json({
+    success: true,
+    data: item,
+  });
+}
