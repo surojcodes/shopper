@@ -13,7 +13,16 @@ export async function createItem(
     data: item,
   });
 }
-export function getItems() {}
+export async function getItems(req: Request, res: Response) {
+  const items = await Item.find();
+  res.status(200).json({
+    success: true,
+    data: {
+      count: items.length,
+      items,
+    },
+  });
+}
 export function getItem() {}
 export function updateItem() {}
 export function deleteItem() {}
