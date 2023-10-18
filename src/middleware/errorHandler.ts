@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
+import { CustomError } from '../errors/CustomError';
 
 interface IErrorDetails {
   location: string;
@@ -53,7 +54,13 @@ const errorHandler = (
       ],
     });
   }
-
+  //Custom Error
+  if (error instanceof CustomError) {
+    return res.status(error.statusCode).json({
+      success: false,
+      issue: [{ location: error.location, issue: error.message }],
+    });
+  }
   console.log('In custom error handler', error);
   res.status(500).json({
     success: false,

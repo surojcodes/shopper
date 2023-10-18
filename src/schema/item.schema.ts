@@ -23,6 +23,12 @@ export const updateItemSchema = z.object({
     itemId: z.string({ required_error: 'Item id is required' }),
   }),
 });
+export const getItemSchema = z.object({
+  params: z.object({
+    itemId: z.string({ required_error: 'Item Id is required' }),
+  }),
+});
 
-export type createProductInput = TypeOf<typeof createItemSchema>;
-export type updateProductInput = TypeOf<typeof updateItemSchema>;
+export type createItemInput = TypeOf<typeof createItemSchema>;
+export type updateItemInput = TypeOf<typeof updateItemSchema>;
+export type getItemInput = TypeOf<typeof getItemSchema>;

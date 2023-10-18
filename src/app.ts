@@ -5,7 +5,7 @@ import errorHandler from './middleware/errorHandler';
 const app = express();
 app.use(express.json());
 
-app.use('/api/list', shoppingListRoutes);
+app.use('/api/items', shoppingListRoutes);
 app.all('*', (req: Request, res: Response) => {
   res.status(404).send('Page Not Found');
 });

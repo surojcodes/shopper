@@ -7,7 +7,7 @@ import {
   updateItem,
 } from '../controllers/item.controller';
 import validate from '../middleware/validateResource';
-import { createItemSchema } from '../schema/item.schema';
+import { createItemSchema, getItemSchema } from '../schema/item.schema';
 import asyncWrapper from '../utils/asyncWrapper';
 
 const router = express.Router();
@@ -18,7 +18,7 @@ router
   .post(validate(createItemSchema), asyncWrapper(createItem));
 router
   .route('/:itemId')
-  .get(asyncWrapper(getItem))
+  .get(validate(getItemSchema), asyncWrapper(getItem))
   .patch(asyncWrapper(updateItem))
   .delete(asyncWrapper(deleteItem));
 

@@ -1,9 +1,20 @@
 import { Request, Response } from 'express';
-import { createProductInput } from '../schema/item.schema';
-import Item from '../models/item.model';
+import { createItemInput, getItemInput } from '../schema/item.schema';
+import Item, { ItemDoc } from '../models/item.model';
+import { FilterQuery } from 'mongoose';
+import { isValidMongoID } from '../utils/isValidMongoId';
+import { NotFoundError } from '../errors/CustomError';
+
+async function checkAndGetItem(query: FilterQuery<ItemDoc>) {
+  const item = await Item.findOne(query);
+  if (!item) {
+    throw new NotFoundError('Item Not Found', 'checkAndGetItem');
+  }
+  return item;
+}
 
 export async function createItem(
-  req: Request<{}, {}, createProductInput['body']>,
+  req: Request<{}, {}, createItemInput['body']>,
   res: Response
 ) {
   const item = Item.build(req.body);
@@ -23,6 +34,19 @@ export async function getItems(req: Request, res: Response) {
     },
   });
 }
-export function getItem() {}
+export async function getItem(
+  req: Request<getItemInput['params']>,
+  res: Response
+) {
+  const itemId = req.params.itemId;
+  if (!isValidMongoID(itemId))
+    throw new NotFoundError('Item Not Found', 'getItem');
+  const item = await checkAndGetItem({ _id: itemId });
+  res.status(200).json({
+    success: true,
+    data: item,
+  });
+}
+
 export function updateItem() {}
 export function deleteItem() {}
