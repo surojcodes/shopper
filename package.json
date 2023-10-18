@@ -10,6 +10,11 @@
     "test": "jest --watchAll --no-cache",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testTimeout": 15000
+  },
   "keywords": [],
   "author": "Suroj Maharjan",
   "license": "ISC",
@@ -22,7 +27,9 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.19",
+    "@types/jest": "^29.5.6",
     "@types/node": "^20.8.6",
+    "@types/supertest": "^2.0.14",
     "jest": "^29.7.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
